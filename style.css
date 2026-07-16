@@ -280,4 +280,9 @@ nav a{
     height:170px;
 }
 
+}.hero-name {
+    font-size: 2.3rem;
+    color: white;
+    margin: 10px 0;
+    font-weight: 700;
 }
