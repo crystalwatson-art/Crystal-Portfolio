@@ -80,7 +80,7 @@ nav a:hover{
 }
 
 .hero h1{
-    font-size:3rem;
+    font-size:2.6rem;
     margin-bottom:15px;
 }
 
@@ -285,4 +285,17 @@ nav a{
     color: white;
     margin: 10px 0;
     font-weight: 700;
+}
+
+.contact-info {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.contact-info a {
+  color: #0066cc;
+  font-weight: bold;
+  text-decoration: none;
 }
