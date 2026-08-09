@@ -25,6 +25,14 @@ A project upgrade is not considered fully finished until its portfolio represent
 
 City Bites is a standing synchronized project. After approved City Bites changes are deployed, review the City Bites portfolio entry so it reflects the latest verified public version. Historical case-study facts and annual research statistics should only be carried into the portfolio after the City Bites clean → validate → analyze → review process is complete.
 
+### ClearPath Budget
+
+ClearPath Budget is also a standing portfolio project. It is currently in active design/development, with the Figma Make budgeting dashboard serving as an important visual prototype.
+
+As ClearPath grows, its portfolio entry should be kept synchronized with the latest approved version, including major budgeting features, paycheck-planning logic, bill-funding alerts, sinking funds, goals, debt tools, light/dark presentation, accessibility improvements, screenshots or previews, and the correct live link when a production version is available.
+
+Do not let the portfolio present an older ClearPath design after the main project has been upgraded.
+
 ## Built With
 
 - HTML
