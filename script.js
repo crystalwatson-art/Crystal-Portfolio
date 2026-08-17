@@ -1,15 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const year = document.querySelector("#year");
 
-    const button = document.querySelector(".btn");
-
-    if(button){
-
-        button.addEventListener("click", function(){
-
-            console.log("Welcome to Crystal's Portfolio!");
-
-        });
-
-    }
-
+  if (year) {
+    year.textContent = new Date().getFullYear();
+  }
 });
