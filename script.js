@@ -76,3 +76,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+// Preview redeploy trigger after environment variable setup.
