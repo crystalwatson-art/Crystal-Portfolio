@@ -77,4 +77,4 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Preview redeploy trigger after environment variable setup.
+// Preview redeploy trigger after all contact email environment variables were added.
