@@ -1,68 +1,78 @@
 document.addEventListener("DOMContentLoaded", () => {
   const year = document.querySelector("#year");
-
-  if (year) {
-    year.textContent = new Date().getFullYear();
-  }
+  if (year) year.textContent = new Date().getFullYear();
 
   const contactForm = document.querySelector("#contact-form");
   const formStatus = document.querySelector("#form-status");
+  const submitButton = contactForm?.querySelector('button[type="submit"]');
   const startedAt = Date.now();
 
-  if (contactForm) {
-    contactForm.addEventListener("submit", (event) => {
-      event.preventDefault();
+  if (submitButton) submitButton.textContent = "Send Message";
 
-      const formData = new FormData(contactForm);
-      const honeypot = String(formData.get("website") || "").trim();
+  if (!contactForm) return;
 
-      if (honeypot) {
-        return;
-      }
+  contactForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-      if (Date.now() - startedAt < 2500) {
-        if (formStatus) {
-          formStatus.textContent = "Please take a moment to review your message and try again.";
-        }
-        return;
-      }
+    const formData = new FormData(contactForm);
+    const honeypot = String(formData.get("website") || "").trim();
 
-      const name = String(formData.get("name") || "").trim();
-      const email = String(formData.get("email") || "").trim();
-      const company = String(formData.get("company") || "").trim();
-      const need = String(formData.get("need") || "").trim();
-      const message = String(formData.get("message") || "").trim();
+    if (honeypot) return;
 
-      if (!name || !email || !need || !message) {
-        if (formStatus) {
-          formStatus.textContent = "Please complete the required fields.";
-        }
-        return;
-      }
-
-      const destination = [
-        99, 114, 121, 115, 116, 97, 108, 119, 97, 116, 115, 111, 110,
-        46, 97, 105, 64, 103, 109, 97, 105, 108, 46, 99, 111, 109
-      ].map((code) => String.fromCharCode(code)).join("");
-
-      const subject = `Portfolio inquiry from ${name}`;
-      const body = [
-        `Name: ${name}`,
-        `Email: ${email}`,
-        company ? `Company: ${company}` : "Company: Not provided",
-        `What they need help with: ${need}`,
-        "",
-        "Message:",
-        message
-      ].join("\n");
-
-      const mailto = `mailto:${destination}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
+    if (Date.now() - startedAt < 2500) {
       if (formStatus) {
-        formStatus.textContent = "Opening your email app with the message prepared. Review it, then press Send.";
+        formStatus.textContent = "Please take a moment to review your message and try again.";
+      }
+      return;
+    }
+
+    const payload = {
+      name: String(formData.get("name") || "").trim(),
+      email: String(formData.get("email") || "").trim(),
+      company: String(formData.get("company") || "").trim(),
+      need: String(formData.get("need") || "").trim(),
+      message: String(formData.get("message") || "").trim(),
+      website: honeypot,
+      turnstileToken: window.turnstileToken || ""
+    };
+
+    if (!payload.name || !payload.email || !payload.need || !payload.message) {
+      if (formStatus) formStatus.textContent = "Please complete the required fields.";
+      return;
+    }
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
+    }
+    if (formStatus) formStatus.textContent = "Sending your message securely...";
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(result.message || "Message could not be sent.");
       }
 
-      window.location.href = mailto;
-    });
-  }
+      contactForm.reset();
+      if (formStatus) {
+        formStatus.textContent = result.message || "Thanks — your message was sent successfully.";
+      }
+    } catch (error) {
+      if (formStatus) {
+        formStatus.textContent = error.message || "I couldn't send your message right now. Please try again in a few minutes.";
+      }
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = "Send Message";
+      }
+    }
+  });
 });
