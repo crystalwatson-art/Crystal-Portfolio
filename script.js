@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const year = document.querySelector("#year");
   if (year) year.textContent = new Date().getFullYear();
 
@@ -8,8 +8,52 @@ document.addEventListener("DOMContentLoaded", () => {
   const startedAt = Date.now();
 
   if (submitButton) submitButton.textContent = "Send Message";
-
   if (!contactForm) return;
+
+  window.turnstileToken = "";
+  let turnstileWidgetId = null;
+
+  async function loadTurnstile() {
+    try {
+      const configResponse = await fetch("/api/config", { cache: "no-store" });
+      if (!configResponse.ok) return;
+
+      const config = await configResponse.json();
+      const siteKey = String(config.turnstileSiteKey || "").trim();
+      if (!siteKey || !submitButton) return;
+
+      const turnstileMount = document.createElement("div");
+      turnstileMount.id = "turnstile-widget";
+      turnstileMount.style.margin = "4px 0 2px";
+      submitButton.parentNode.insertBefore(turnstileMount, submitButton);
+
+      const script = document.createElement("script");
+      script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        if (!window.turnstile) return;
+        turnstileWidgetId = window.turnstile.render("#turnstile-widget", {
+          sitekey: siteKey,
+          theme: "auto",
+          callback(token) {
+            window.turnstileToken = token;
+          },
+          "expired-callback"() {
+            window.turnstileToken = "";
+          },
+          "error-callback"() {
+            window.turnstileToken = "";
+          }
+        });
+      };
+      document.head.appendChild(script);
+    } catch (error) {
+      console.warn("Turnstile could not be initialized.", error);
+    }
+  }
+
+  await loadTurnstile();
 
   contactForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -61,6 +105,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       contactForm.reset();
+      window.turnstileToken = "";
+      if (window.turnstile && turnstileWidgetId !== null) {
+        window.turnstile.reset(turnstileWidgetId);
+      }
+
       if (formStatus) {
         formStatus.textContent = result.message || "Thanks — your message was sent successfully.";
       }
@@ -76,5 +125,3 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-
-// Preview redeploy trigger after all contact email environment variables were added.
