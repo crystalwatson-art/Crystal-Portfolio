@@ -6,6 +6,81 @@
   <meta name="description" content="Crystal Watson builds practical AI products, workflow automations, dashboards, and web solutions for real business problems.">
   <title>Crystal Watson | AI Product Builder</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .contact-form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .form-field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .form-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-field label {
+      color: var(--navy-deep);
+      font-size: 0.86rem;
+      font-weight: 750;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      padding: 11px 12px;
+    }
+
+    .form-field textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      outline: 3px solid rgba(63, 112, 255, 0.18);
+      border-color: var(--blue);
+    }
+
+    .form-note,
+    .form-status {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .form-status {
+      min-height: 1.2em;
+    }
+
+    .hp-field {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    @media (max-width: 680px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -237,11 +312,54 @@
           <p class="eyebrow">Let’s Work Together</p>
           <h2>Have a repetitive process, messy workflow, or business problem that needs a better tool?</h2>
           <p>Tell me what is slowing you down. I can help explore whether an AI workflow, dashboard, automation, or web solution makes sense.</p>
+          <p class="form-note">To reduce automated email harvesting, my email address is not published directly on this page.</p>
         </div>
-        <div class="contact-actions">
-          <a class="btn btn-primary" href="mailto:crystalwatson.ai@gmail.com?subject=Business%20Project%20Inquiry">Start a Conversation</a>
+
+        <form id="contact-form" class="contact-form" novalidate>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="contact-name">Name *</label>
+              <input id="contact-name" name="name" type="text" autocomplete="name" required>
+            </div>
+
+            <div class="form-field">
+              <label for="contact-email">Email *</label>
+              <input id="contact-email" name="email" type="email" autocomplete="email" required>
+            </div>
+
+            <div class="form-field">
+              <label for="contact-company">Company</label>
+              <input id="contact-company" name="company" type="text" autocomplete="organization">
+            </div>
+
+            <div class="form-field">
+              <label for="contact-need">What do you need help with? *</label>
+              <select id="contact-need" name="need" required>
+                <option value="">Choose one</option>
+                <option>AI workflow automation</option>
+                <option>Business dashboard</option>
+                <option>AI marketing tool</option>
+                <option>Web or API solution</option>
+                <option>Something else</option>
+              </select>
+            </div>
+
+            <div class="form-field full">
+              <label for="contact-message">Tell me about the problem *</label>
+              <textarea id="contact-message" name="message" required></textarea>
+            </div>
+          </div>
+
+          <div class="hp-field" aria-hidden="true">
+            <label for="website">Website</label>
+            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <button class="btn btn-primary" type="submit">Prepare Message</button>
+          <p class="form-note">Submitting prepares the message in your email app so you can review it before sending.</p>
+          <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
           <a class="btn btn-secondary" href="https://github.com/crystalwatson-art" target="_blank" rel="noopener noreferrer">GitHub Profile</a>
-        </div>
+        </form>
       </div>
     </section>
   </main>
