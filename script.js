@@ -125,3 +125,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 });
+
+// Trigger preview rebuild after Turnstile environment variables were added.
