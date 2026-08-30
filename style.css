@@ -693,3 +693,203 @@ footer {
     transition: none !important;
   }
 }
+
+
+/* Portfolio page structure */
+nav a[aria-current="page"] {
+  color: var(--blue);
+}
+
+.section-cta {
+  margin-top: 30px;
+}
+
+.page-hero {
+  padding: 88px 0 64px;
+  background:
+    radial-gradient(circle at 80% 18%, rgba(63, 112, 255, 0.13), transparent 30%),
+    linear-gradient(180deg, #f8faff 0%, #ffffff 100%);
+  border-bottom: 1px solid var(--line);
+}
+
+.page-hero h1 {
+  max-width: 850px;
+  color: var(--navy-deep);
+  font-size: clamp(2.5rem, 5vw, 4.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+}
+
+.page-hero p:last-child {
+  max-width: 760px;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 1.08rem;
+}
+
+.project-library {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.project-library .project-card {
+  min-height: 390px;
+}
+
+.service-library {
+  display: grid;
+  gap: 18px;
+}
+
+.service-detail {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.75fr) minmax(0, 1.25fr);
+  gap: 42px;
+  padding: 30px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: white;
+}
+
+.service-number {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--blue);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.service-detail h2 {
+  color: var(--navy-deep);
+  font-size: 1.6rem;
+  letter-spacing: -0.03em;
+}
+
+.service-detail p {
+  color: #566178;
+}
+
+.service-detail p + p,
+.service-detail p + .text-link {
+  margin-top: 14px;
+}
+
+.page-bottom-cta {
+  margin-top: 28px;
+  padding: 34px;
+  border-radius: 22px;
+  background: var(--navy-deep);
+  color: white;
+}
+
+.page-bottom-cta h2 {
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  line-height: 1.15;
+}
+
+.page-bottom-cta p {
+  margin-top: 12px;
+  color: #cbd5e4;
+}
+
+.page-bottom-cta .btn {
+  margin-top: 22px;
+  background: white;
+  color: var(--navy-deep);
+}
+
+/* Secure contact form */
+.contact-form {
+  display: grid;
+  gap: 14px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.form-field {
+  display: grid;
+  gap: 6px;
+}
+
+.form-field.full {
+  grid-column: 1 / -1;
+}
+
+.form-field label {
+  color: var(--navy-deep);
+  font-size: 0.86rem;
+  font-weight: 750;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  padding: 11px 12px;
+}
+
+.form-field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  outline: 3px solid rgba(63, 112, 255, 0.18);
+  border-color: var(--blue);
+}
+
+.form-note,
+.form-status {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.form-status {
+  min-height: 1.2em;
+}
+
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+@media (max-width: 920px) {
+  .project-library,
+  .service-detail {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-hero {
+    padding: 62px 0 46px;
+  }
+
+  .project-library {
+    grid-template-columns: 1fr;
+  }
+
+  .service-detail,
+  .page-bottom-cta {
+    padding: 24px;
+  }
+}
